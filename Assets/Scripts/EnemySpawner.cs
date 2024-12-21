@@ -6,7 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] List<WaveConfig> waveConfigs; // grabbing a list of our wave configs from our waves folder
     [SerializeField] int startingWave = 0; // our index in waveconfigslist
-    [SerializeField] bool looping = false; // for our enemy wave loops
+    [SerializeField] bool looping = true; // for our enemy wave loops
    IEnumerator Start() // enum in front will turn our start into a start coroutine 
     {
         do // start this series coroutine 
