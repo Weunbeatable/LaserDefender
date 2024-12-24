@@ -1,0 +1,46 @@
+Small guide intended to be used for this project to help with consistency. 
+
+formatting: 
+	2 word variables or functions camel cased. 
+		•e.g. private float _healthValue;
+		•e.g. public void EnemySpawner()
+	3 or more word variables will be _separated
+		•e.g. public string full_Name_Parser;
+		•e.g. private void _Enemy_Pathing_Logic;
+
+Variables:
+All variables should start lower case. 
+	• private and protected variables are preceeded with a _ 
+		e.g. private int _turnValue;
+	•public variables don't need to be preceeded with anything. 
+
+Code separation: 
+Namespaces will be added for subfolder types to allower for easier separation and seperation of concerns
+
+e.g. If the folder the script is located in is Core the script will be placed into the MAIN root subfolder
+
+e.g. UI folder has a script called backgroundScroller
+	• e.g. namespace LD.UI
+		{
+			public class BackgroundScroller: MONOBEHAVIOUR
+		}
+	If a script is located in a subfolder inside a main root folder, the namespace will still be taken from the main root folder. 
+	• e.g. Script names EnemyAI is located in  Enemy => EnemyAI. 
+	• Enemy was the root folder so the namespace will be namespace LD.ENEMY{} (this is just an example there is no gaurantee that
+	• The enemy will have its own library or that the enemy AI will stay in that folder. 
+
+Class naming:
+• All class names MUST start with a capital,
+• non monobehaviour classes can be preceeded with C for some form of consistency. (though not a must)
+• All interfaces must be preceeded with I e.g. IDamageable - to persist with C# standard for naming. 
+
+Events: 
+• Events will be preceeded with On
+	e.g. • OnSelectedChanged;
+Assets: (This isn't coding but im keeping it here until i make another text file)
+Assets that are purchased and not should be separated, 
+Assets that are intended for a specific platform should also be separated e.g. mobile vs WebGL 
+structure will be purchased vs free then mobile vs webGL
+
+ALL code in project is subject to review to ensure things are easier to manage
+  

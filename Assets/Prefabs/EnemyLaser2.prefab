@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3053330160841988667}
   - component: {fileID: 887753932230766511}
   m_Layer: 11
-  m_Name: EnemyLaser
+  m_Name: EnemyLaser2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b0ea70e57b756ca4f95283e9c45e4c8a, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9245283, g: 0.3274036, b: 0.056692798, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c0d76f61d0dc44daab777349adce14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 100
+  damage: 5
 --- !u!50 &3053330160841988667
 Rigidbody2D:
   serializedVersion: 4
