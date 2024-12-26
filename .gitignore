@@ -2,9 +2,12 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
+**/UtuPlugin
+**/JMO Assets
 **/Core
 */Audio
 **/VFX
+**/IdaFaber
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/

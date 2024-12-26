@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Spinner : MonoBehaviour
 {
-    [SerializeField] float SpeedofSpin = 720f;
+    [SerializeField] float _SpeedofSpin = 720f;
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(0, 0, SpeedofSpin * Time.deltaTime);
+        transform.Rotate(0, 0, _SpeedofSpin * Time.deltaTime);
     }
 }

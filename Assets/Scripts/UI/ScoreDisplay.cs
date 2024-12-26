@@ -3,23 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using LD.Core;
 
-public class ScoreDisplay : MonoBehaviour
+namespace LD.UI
 {
-    TextMeshProUGUI ScoreText;
-    GameSession gameSession;
-    // Start is called before the first frame update
-    void Start()
+    public class ScoreDisplay : MonoBehaviour
     {
-        ScoreText = GetComponent<TextMeshProUGUI>();
-        gameSession = FindObjectOfType<GameSession>();
-        
-    }
+        TextMeshProUGUI _ScoreText;
+        GameSession _gameSession;
+        // Start is called before the first frame update
+        void Start()
+        {
+            _ScoreText = GetComponent<TextMeshProUGUI>();
+            _gameSession = FindObjectOfType<GameSession>();
 
-    // Update is called once per frame
-    void Update()
-    {
-        ScoreText.text = gameSession.getScore().ToString();
-        Debug.Log(ScoreText);
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            _ScoreText.text = _gameSession.getScore().ToString();
+
+        }
     }
 }

@@ -3,21 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class HealthDisplay : MonoBehaviour
+namespace LD.UI
 {
-    TextMeshProUGUI HealthText;
-    Player playerInfo;
-    // Start is called before the first frame update
-    void Start()
+    public class HealthDisplay : MonoBehaviour
     {
-        HealthText= GetComponent<TextMeshProUGUI>();
-       playerInfo = FindObjectOfType<Player>();
-    }
+        TextMeshProUGUI _HealthText;
+        Player _playerInfo;
+        // Start is called before the first frame update
+        void Start()
+        {
+            _HealthText = GetComponent<TextMeshProUGUI>();
+            _playerInfo = FindObjectOfType<Player>();
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        HealthText.text = playerInfo.GetHealth().ToString();
-        Debug.Log(HealthText);
+        // Update is called once per frame
+        void Update()
+        {
+            _HealthText.text = _playerInfo.GetHealth().ToString();
+           
+        }
     }
 }

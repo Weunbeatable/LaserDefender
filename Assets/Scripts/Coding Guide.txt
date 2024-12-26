@@ -12,7 +12,10 @@ Variables:
 All variables should start lower case. 
 	• private and protected variables are preceeded with a _ 
 		e.g. private int _turnValue;
-	•public variables don't need to be preceeded with anything. 
+	• public variables don't need to be preceeded with anything. 
+	• Consts will be in all caps, separated by _ e.g. TOTAL_HEALTH
+	* Currently no need to separate formatting of local vs global variables. This will be re-evaluated as time goes on
+
 
 Code separation: 
 Namespaces will be added for subfolder types to allower for easier separation and seperation of concerns

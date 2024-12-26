@@ -113,20 +113,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbdc697ab01698846ba9375b6d6e0998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 400
+  _EnemyLaser: {fileID: 5118262661088146345, guid: 03ac4d35f39154e49a2f81ea67dbfe91,
+    type: 3}
+  _ExplosionVFX: {fileID: 5801416215503892025, guid: 7aba8de520ee244418a0bc4e887704c7,
+    type: 3}
+  _impactMat: {fileID: 2100000, guid: 7f6ca4bfee7af7f41a0d707fea6a7323, type: 2}
+  _health: 300
   scoreValue: 150
-  minTimeBetweenShots: 1
-  maxTimeBetweenShots: 2
-  EnemyLaser: {fileID: 5118262661088146345, guid: 03ac4d35f39154e49a2f81ea67dbfe91,
-    type: 3}
-  EnemyProjectileSpeed: -6
-  ExplosionVFX: {fileID: 5801416215503892025, guid: 7aba8de520ee244418a0bc4e887704c7,
-    type: 3}
-  deathTimer: 1
-  enemyLaserSFX: {fileID: 8300000, guid: ff8b6042f92cddd499dca32d2ebeee31, type: 3}
-  enemyDeathSFX: {fileID: 8300000, guid: c4f45abde3f988846a4389803e631e89, type: 3}
-  enemyLaserSFXVolume: 0.199
-  enemyExplosionSFXVolume: 0.28
+  _min_Time_Between_Shots: 0.2
+  _max_Time_Between_Shots: 3
+  _deathTimer: 1
+  _EnemyProjectileSpeed: -12
+  _impact_flash_duration: 0.2
+  enemy_Laser_SFX: {fileID: 8300000, guid: ff8b6042f92cddd499dca32d2ebeee31, type: 3}
+  enemy_Death_SFX: {fileID: 8300000, guid: c4f45abde3f988846a4389803e631e89, type: 3}
+  enemy_Laser_SFX_Volume: 0.25
+  enemy_Explosion_SFX_Volume: 0.75
 --- !u!58 &-503469768644210965
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -201,4 +203,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c0d76f61d0dc44daab777349adce14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 200
+  _damage: 100

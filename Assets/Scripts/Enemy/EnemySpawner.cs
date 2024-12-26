@@ -1,39 +1,39 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using LD.Core;
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] List<WaveConfig> waveConfigs; // grabbing a list of our wave configs from our waves folder
-    [SerializeField] int startingWave = 0; // our index in waveconfigslist
-    [SerializeField] bool looping = true; // for our enemy wave loops
+    [SerializeField] List<WaveConfig> _waveConfigs; // grabbing a list of our wave configs from our waves folder
+    [SerializeField] int _startingWave = 0; // our index in waveconfigslist
+    [SerializeField] bool _looping = true; // for our enemy wave loops
    IEnumerator Start() // enum in front will turn our start into a start coroutine 
     {
         do // start this series coroutine 
         {
-            yield return StartCoroutine(SpawnAllWaves()); // yield and come back to start once this is completed
+            yield return StartCoroutine(_Spawn_All_Waves()); // yield and come back to start once this is completed
         }
-        while (looping); // if true go back up to the do so we can repeat the process 
+        while (_looping); // if true go back up to the do so we can repeat the process 
     }
     
-    private IEnumerator SpawnAllWaves()
+    private IEnumerator _Spawn_All_Waves()
     {
-        for(int WaveIndex = startingWave; WaveIndex < waveConfigs.Count; WaveIndex++) // as long as our wave index is less than the size of our waveconfigs list
+        for(int _WaveIndex = _startingWave; _WaveIndex < _waveConfigs.Count; _WaveIndex++) // as long as our wave index is less than the size of our waveconfigs list
         {
-            var currentWave = waveConfigs[WaveIndex];
-            yield return StartCoroutine(SpawnAllEnemiesInwave(currentWave));
+            var _currentWave = _waveConfigs[_WaveIndex];
+            yield return StartCoroutine(_Spawn_All_Enemies_In_wave(_currentWave));
         }
     }
-    private IEnumerator SpawnAllEnemiesInwave(WaveConfig waveConfig) // we are passing our current wave into the wave config
+    private IEnumerator _Spawn_All_Enemies_In_wave(WaveConfig _waveConfig) // we are passing our current wave into the wave config
     {
-        for (int EnemyCount = 0; EnemyCount < waveConfig.GetNumberOfEnemies(); EnemyCount++) // for sake of being informative change i to enemycount 
+        for (int _EnemyCount = 0; _EnemyCount < _waveConfig.Get_Number_Of_Enemies(); _EnemyCount++) // for sake of being informative change i to enemycount 
         {
-            var newEnemy = Instantiate(
-                waveConfig.GetenemyPrefab(),// object we are instantiating 
-                waveConfig.Getwaypoints()[0].transform.position, // objects position
+            var _newEnemy = Instantiate(
+                _waveConfig.Get_Enemy_Prefab(),// object we are instantiating 
+                _waveConfig.GetWaypoints()[0].transform.position, // objects position
                 Quaternion.identity); // objects rotation
-            newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);// getting the wave config directly from enemy pathing and we are defining our own config in this class.
-            yield return new WaitForSeconds(waveConfig.GettimeBetweenSpawns());
+            _newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(_waveConfig);// getting the wave config directly from enemy pathing and we are defining our own config in this class.
+            yield return new WaitForSeconds(_waveConfig.Get_Time_Between_Spawns());
         }
     }
 }
