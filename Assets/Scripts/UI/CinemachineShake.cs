@@ -25,6 +25,7 @@ public class CinemachineShake : MonoBehaviour
             _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         cinemachineBasicMultiChannel.m_AmplitudeGain = intensity;
+        _startingIntensity = intensity;
         _shakeTime = time;
         _shakeTimerTotal = time;
     }
@@ -34,17 +35,13 @@ public class CinemachineShake : MonoBehaviour
         if (_shakeTime > 0)
         {
             _shakeTime -= Time.deltaTime;
-            if (_shakeTime <= 0)
-            {
-                // time to shake camera has elapsed
-                CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin =
-                    _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            // time to shake camera has elapsed
+            CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin =
+                _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
-                // reset the amplitutde
-                cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0f;
-                // interpolate intensity change
-                Mathf.Lerp(_startingIntensity, 0f_, _shakeTime / _shakeTimerTotal);
-            }
+            // reset the amplitutde
+            cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = Mathf.Lerp(_startingIntensity, 0f, (1 -(_shakeTime / _shakeTimerTotal)));
+            // interpolate intensity change
         }
     }
 }

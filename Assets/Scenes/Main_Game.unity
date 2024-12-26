@@ -1148,6 +1148,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5051525967039732343, guid: 14fea93a07a931f4790b09621671ccd1,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 229
+      objectReference: {fileID: 0}
     - target: {fileID: 5051525967208521338, guid: 14fea93a07a931f4790b09621671ccd1,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1397,7 +1402,17 @@ PrefabInstance:
     - target: {fileID: 6062868871330333699, guid: d7656c448e6cc2e468eb5fb8050e8f77,
         type: 3}
       propertyPath: _health
-      value: 2000
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6062868871330333699, guid: d7656c448e6cc2e468eb5fb8050e8f77,
+        type: 3}
+      propertyPath: _impactMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 7f6ca4bfee7af7f41a0d707fea6a7323, type: 2}
+    - target: {fileID: 6062868871330333699, guid: d7656c448e6cc2e468eb5fb8050e8f77,
+        type: 3}
+      propertyPath: _ProjectileFiringPeriod
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 6062868871330333700, guid: d7656c448e6cc2e468eb5fb8050e8f77,
         type: 3}

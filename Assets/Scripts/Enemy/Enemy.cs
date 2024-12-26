@@ -97,6 +97,7 @@ public class Enemy : MonoBehaviour, IImpact
     private void Die()
     {
         FindObjectOfType<GameSession>().Add_To_Score(scoreValue);
+        CinemachineShake.Instance.ShakeCamera(6, 0.1f);
         Instantiate(_ExplosionVFX, transform.position, Quaternion.identity); // Instantiate the explosion game object at the enemy ship prefab instead of near the origin or where it was first made
         AudioSource.PlayClipAtPoint(enemy_Death_SFX, Camera.main.transform.position, enemy_Explosion_SFX_Volume);
         Destroy(gameObject, _deathTimer);

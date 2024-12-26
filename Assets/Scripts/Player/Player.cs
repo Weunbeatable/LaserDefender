@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using LD.Core;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IImpact
 
 {
     //config
@@ -13,11 +13,14 @@ public class Player : MonoBehaviour
     [SerializeField] float _padding = 1f; // adding some boundary padding for our scene. 
     [SerializeField] int _health = 200;
     [SerializeField] GameObject _ExplosionVFX;
+    [SerializeField] float _impact_flash_duration = 0.3f;
+    [SerializeField] Material _impactMat;
+
 
     [Header("Projectile")]
     [SerializeField] public GameObject laser;
     [SerializeField] float _ProjectileSpeed = 10f;
-    [SerializeField] float _ProjectileFiringPeriod = 1f;
+    [SerializeField] float _ProjectileFiringPeriod = .4f;
 
     [Header("Audio")]
     [SerializeField] [Range(0, 1)] public float laserSound = 0.25f;
@@ -27,6 +30,8 @@ public class Player : MonoBehaviour
 
     Coroutine Firingcoroutine;
 
+    Material _originalMat;
+
     float _xMin;
     float _xMax;
     float _yMin;
@@ -35,12 +40,15 @@ public class Player : MonoBehaviour
    
     void Start()
     {
+        // Cache the originial material for the ship 
+        CacheOriginalMaterial();
         _Set_Up_Move_Boundaries();
         StartCoroutine(_TestCoroutine());
     }
 
-   
  
+
+
     void Update()
     {
         _Move();
@@ -126,7 +134,9 @@ public class Player : MonoBehaviour
 
     private void ProcessHit(DamageDealer _damageDealer)
     {
+        CinemachineShake.Instance.ShakeCamera(7, 0.1f);
         _health -= _damageDealer.GetDamage(); //subtract some health
+        PlayImpactEffect();
         _damageDealer.Hit();
         if (_health <= 0)
         {
@@ -137,6 +147,7 @@ public class Player : MonoBehaviour
     private void Die()
     {
         Instantiate(_ExplosionVFX, transform.position, Quaternion.identity); // Instantiate the explosion game object at the enemy ship prefab instead of near the origin or where it was first made
+        CinemachineShake.Instance.ShakeCamera(14f, 0.1f);
         AudioSource.PlayClipAtPoint(player_Death_Sound, Camera.main.transform.position, deathSound);
         Destroy(gameObject);
         FindObjectOfType<Level>().Load_Game_Over();
@@ -146,5 +157,27 @@ public class Player : MonoBehaviour
     public int GetHealth()
     {
         return (_health);
+    }
+
+    public void PlayImpactEffect()
+    {
+        StartCoroutine(_playFlash());
+        this.gameObject.GetComponent<SpriteRenderer>().material = _impactMat;
+    }
+    private IEnumerator _playFlash()
+    {
+        while (true)
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().material = _originalMat;
+
+            yield return new WaitForSeconds(_impact_flash_duration);
+        }
+    }
+    private void CacheOriginalMaterial()
+    {
+        if (TryGetComponent<SpriteRenderer>(out SpriteRenderer spriteRenderer))
+        {
+            _originalMat = spriteRenderer.material;
+        }
     }
 }
