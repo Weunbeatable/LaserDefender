@@ -20,6 +20,7 @@ public class Player : MonoBehaviour, IImpact
     [SerializeField] Material _impactMat;
     [SerializeField] Sprite[] _shipDamage;
     [SerializeField] SpriteRenderer _damageRenderer;
+    [SerializeField] SpriteRenderer _deathRenderer;
 
     [Header("Projectile")]
     [SerializeField] public GameObject laser;
@@ -153,15 +154,16 @@ public class Player : MonoBehaviour, IImpact
     }
     private void _playerHealth_onDie()
     {
-      
+        StartCoroutine(_finalExplosion());
         Die();
     }
     private void Die()
     {
-        StartCoroutine(_finalExplosion());
+        
         Instantiate(_ExplosionVFX, transform.position, Quaternion.identity); // Instantiate the explosion game object at the enemy ship prefab instead of near the origin or where it was first made
         CinemachineShake.Instance.ShakeCamera(14f, 0.1f);
         AudioSource.PlayClipAtPoint(player_Death_Sound, Camera.main.transform.position, deathSound);
+        FindObjectOfType<GameSession>().SetHighScore();
         Destroy(gameObject);
         FindObjectOfType<Level>().Load_Game_Over();
         
@@ -190,7 +192,7 @@ public class Player : MonoBehaviour, IImpact
        
         while (_counter < _shipDamage.Length)
         {
-            _damageRenderer.sprite = _shipDamage[_counter];
+            _deathRenderer.sprite = _shipDamage[_counter];
             Debug.Log("changing ship image to counter value " + _counter);
             _counter++;
             yield return new WaitForSeconds(1f);
@@ -226,7 +228,6 @@ public class Player : MonoBehaviour, IImpact
         else
         {
             Debug.Log("Start death routine.");
-            StartCoroutine(_finalExplosion());
         }
     }
     private void CacheOriginalMaterial()
