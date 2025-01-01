@@ -10,11 +10,13 @@ namespace LD.UI
     public class ScoreDisplay : MonoBehaviour
     {
         TextMeshProUGUI _ScoreText;
+        TextMeshProUGUI _HighScoreText;
         GameSession _gameSession;
         // Start is called before the first frame update
         void Start()
         {
             _ScoreText = GetComponent<TextMeshProUGUI>();
+            _HighScoreText = GetComponent<TextMeshProUGUI>();
             _gameSession = FindObjectOfType<GameSession>();
 
         }

@@ -8,14 +8,18 @@ public class Player : MonoBehaviour, IImpact
 
 {
     //config
-    [Header("Player")]
+    [Header("Player Stats")]
+    [SerializeField] Health _playerHealth;
     [SerializeField] float _moveSpeed = 10f;
     [SerializeField] float _padding = 1f; // adding some boundary padding for our scene. 
-    [SerializeField] int _health = 200;
-    [SerializeField] GameObject _ExplosionVFX;
     [SerializeField] float _impact_flash_duration = 0.3f;
-    [SerializeField] Material _impactMat;
 
+
+    [Header("Visual objects")]
+    [SerializeField] GameObject _ExplosionVFX;
+    [SerializeField] Material _impactMat;
+    [SerializeField] Sprite[] _shipDamage;
+    [SerializeField] SpriteRenderer _damageRenderer;
 
     [Header("Projectile")]
     [SerializeField] public GameObject laser;
@@ -40,14 +44,20 @@ public class Player : MonoBehaviour, IImpact
    
     void Start()
     {
+        _playerHealth = GetComponent<Health>();
         // Cache the originial material for the ship 
         CacheOriginalMaterial();
         _Set_Up_Move_Boundaries();
         StartCoroutine(_TestCoroutine());
+        _playerHealth.onDie += _playerHealth_onDie; // subscribe to death event from health script
     }
 
- 
 
+
+    private void OnDestroy()
+    {
+        _playerHealth.onDie -= _playerHealth_onDie;
+    }
 
     void Update()
     {
@@ -116,12 +126,14 @@ public class Player : MonoBehaviour, IImpact
         Debug.Log("I'm so surprised this turned out so well");
 
     }
+    #region Powerups
     /* 
      * Storing this method for a future powerup
      *  GameObject Laser = Instantiate(laser, transform.position, Quaternion.identity);  // quaternion.identity means just use rotation you have don't change anything.
             yield return new WaitForSeconds(1);
             Laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, ProjectileSpeed); // apply some velocity to this projectile
      */
+    #endregion
 
 
 
@@ -135,17 +147,18 @@ public class Player : MonoBehaviour, IImpact
     private void ProcessHit(DamageDealer _damageDealer)
     {
         CinemachineShake.Instance.ShakeCamera(7, 0.1f);
-        _health -= _damageDealer.GetDamage(); //subtract some health
+        _playerHealth.DealDamage(_damageDealer.GetDamage()); //subtract some health
         PlayImpactEffect();
         _damageDealer.Hit();
-        if (_health <= 0)
-        {
-            Die();
-        }
     }
-
+    private void _playerHealth_onDie()
+    {
+      
+        Die();
+    }
     private void Die()
     {
+        StartCoroutine(_finalExplosion());
         Instantiate(_ExplosionVFX, transform.position, Quaternion.identity); // Instantiate the explosion game object at the enemy ship prefab instead of near the origin or where it was first made
         CinemachineShake.Instance.ShakeCamera(14f, 0.1f);
         AudioSource.PlayClipAtPoint(player_Death_Sound, Camera.main.transform.position, deathSound);
@@ -154,14 +167,11 @@ public class Player : MonoBehaviour, IImpact
         
     }
 
-    public int GetHealth()
-    {
-        return (_health);
-    }
-
     public void PlayImpactEffect()
     {
+        playDamageSprite();
         StartCoroutine(_playFlash());
+       // _damageRenderer.sprite = null; // remove the sprite that was previously there.
         this.gameObject.GetComponent<SpriteRenderer>().material = _impactMat;
     }
     private IEnumerator _playFlash()
@@ -173,6 +183,52 @@ public class Player : MonoBehaviour, IImpact
             yield return new WaitForSeconds(_impact_flash_duration);
         }
     }
+
+    private IEnumerator _finalExplosion()
+    {
+        int _counter = 0;
+       
+        while (_counter < _shipDamage.Length)
+        {
+            _damageRenderer.sprite = _shipDamage[_counter];
+            Debug.Log("changing ship image to counter value " + _counter);
+            _counter++;
+            yield return new WaitForSeconds(1f);
+        }
+        
+            Debug.Log("changing ship image to counter value " + _counter);
+        yield return new WaitForSeconds(1f);
+    }
+    private void playDamageSprite()
+    {
+        int _damage_sprites_Index_Value;
+        int[] _damage_sprites_Array = new int [_shipDamage.Length];
+
+        if(_playerHealth.GetNormalizedHealth() == 1f)
+        {
+            _damageRenderer.sprite = null;
+        }
+        else if (_playerHealth.GetNormalizedHealth() >= 0.7 && _playerHealth.GetNormalizedHealth() <1f)
+        {
+             _damage_sprites_Index_Value = UnityEngine.Random.Range(0, _damage_sprites_Array[2]);
+            _damageRenderer.sprite = _shipDamage[_damage_sprites_Index_Value];
+        }
+        else if (_playerHealth.GetNormalizedHealth() >= 0.5f && _playerHealth.GetNormalizedHealth() < 0.7f)
+        {
+            _damage_sprites_Index_Value = UnityEngine.Random.Range(_damage_sprites_Array[3], _damage_sprites_Array[5]);
+            _damageRenderer.sprite = _shipDamage[_damage_sprites_Index_Value];
+        }
+        else if (_playerHealth.getCurrentHealth() > 0f && _playerHealth.GetNormalizedHealth() < 0.5f)
+        {
+            _damage_sprites_Index_Value = UnityEngine.Random.Range(_damage_sprites_Array[6], _shipDamage.Length - 1);
+            _damageRenderer.sprite = _shipDamage[_damage_sprites_Index_Value];
+        }
+        else
+        {
+            Debug.Log("Start death routine.");
+            StartCoroutine(_finalExplosion());
+        }
+    }
     private void CacheOriginalMaterial()
     {
         if (TryGetComponent<SpriteRenderer>(out SpriteRenderer spriteRenderer))
@@ -180,4 +236,6 @@ public class Player : MonoBehaviour, IImpact
             _originalMat = spriteRenderer.material;
         }
     }
+
+    public Health _Get_Player_Health() => _playerHealth;
 }

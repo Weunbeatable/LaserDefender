@@ -7,17 +7,10 @@ using LD.Core;
 public class Enemy : MonoBehaviour, IImpact
 {
     [Header("Enemy related stats")]
+    [SerializeField] Health _enemyHealth;
+
     float _shotCounter;
     float _impact_Effect_Timer;
-    Material _originalMat;
-
-
-    [Header("Aduio and Visual objects")]
-    [SerializeField] GameObject _EnemyLaser;
-    [SerializeField] GameObject _ExplosionVFX;
-    [SerializeField] Material _impactMat;
-
-    [SerializeField] float _health = 100;
     [SerializeField] int scoreValue = 150;
     [SerializeField] float _min_Time_Between_Shots = 0.2f;
     [SerializeField] float _max_Time_Between_Shots = 3f;
@@ -25,7 +18,11 @@ public class Enemy : MonoBehaviour, IImpact
     [SerializeField] float _EnemyProjectileSpeed = -12f;
     [SerializeField] float _impact_flash_duration = 0.3f;
 
-
+    [Header("Aduio and Visual objects")]
+    [SerializeField] GameObject _EnemyLaser;
+    [SerializeField] GameObject _ExplosionVFX;
+    [SerializeField] Material _impactMat;
+    Material _originalMat;
 
 
     [Header("Audio")]
@@ -37,12 +34,19 @@ public class Enemy : MonoBehaviour, IImpact
     Coroutine _DestroyedShip;
     void Start()
     {
+        _enemyHealth = GetComponent<Health>();
         // Cache the originial material for the ship 
         if(TryGetComponent<SpriteRenderer>(out SpriteRenderer spriteRenderer))
         {
             _originalMat = spriteRenderer.material;
         }
         _shotCounter = UnityEngine.Random.Range(_min_Time_Between_Shots, _max_Time_Between_Shots);
+        _enemyHealth.onDie += _enemyHealth_onDie;
+    }
+
+    private void OnDestroy()
+    {
+        _enemyHealth.onDie -= _enemyHealth_onDie;
     }
 
     // Update is called once per frame
@@ -78,16 +82,14 @@ public class Enemy : MonoBehaviour, IImpact
     private void ProcessHit(DamageDealer _damageDealer)
     {
         HandleDamgeProcess(_damageDealer);
-
-        if (_health <= 0)
-        {
-            Die();
-        }
     }
-
+    private void _enemyHealth_onDie()
+    {
+        Die();
+    }
     private void HandleDamgeProcess(DamageDealer _damageDealer)
     {
-        _health -= _damageDealer.GetDamage(); //subtract some health
+        _enemyHealth.DealDamage(_damageDealer.GetDamage()); //subtract some health
         PlayImpactEffect();
         CinemachineShake.Instance.ShakeCamera(2, 0.1f);
         _damageDealer.Hit();
@@ -96,16 +98,27 @@ public class Enemy : MonoBehaviour, IImpact
 
     private void Die()
     {
-        FindObjectOfType<GameSession>().Add_To_Score(scoreValue);
+        if(TryGetComponent<CircleCollider2D>(out CircleCollider2D circleCollider))
+        {
+            // turn of the collider to destroyed ships to avoid cheesing. 
+            circleCollider.enabled = false;
+        }
         CinemachineShake.Instance.ShakeCamera(6, 0.1f);
+        //TODO add death effects
+        Destroy(gameObject, _deathTimer);
+    }
+
+    private void _Play_Damage_Effects()
+    {
         Instantiate(_ExplosionVFX, transform.position, Quaternion.identity); // Instantiate the explosion game object at the enemy ship prefab instead of near the origin or where it was first made
         AudioSource.PlayClipAtPoint(enemy_Death_SFX, Camera.main.transform.position, enemy_Explosion_SFX_Volume);
-        Destroy(gameObject, _deathTimer);
     }
 
     public void PlayImpactEffect()
     {
+        FindObjectOfType<GameSession>().Add_To_Score(scoreValue);
         StartCoroutine(_playFlash());
+        _Play_Damage_Effects();
         this.gameObject.GetComponent<SpriteRenderer>().material = _impactMat;
     }
 
