@@ -10,6 +10,8 @@ public class Player : MonoBehaviour, IImpact
     //config
     [Header("Player Stats")]
     [SerializeField] Health _playerHealth;
+    [SerializeField] GameObject _player_Shield_Object;
+    [SerializeField] Shields _playerShields;
     [SerializeField] float _moveSpeed = 10f;
     [SerializeField] float _padding = 1f; // adding some boundary padding for our scene. 
     [SerializeField] float _impact_flash_duration = 0.3f;
@@ -21,6 +23,7 @@ public class Player : MonoBehaviour, IImpact
     [SerializeField] Sprite[] _shipDamage;
     [SerializeField] SpriteRenderer _damageRenderer;
     [SerializeField] SpriteRenderer _deathRenderer;
+    [SerializeField] GameObject _ExplosionObject;
 
     [Header("Projectile")]
     [SerializeField] public GameObject laser;
@@ -41,18 +44,21 @@ public class Player : MonoBehaviour, IImpact
     float _xMax;
     float _yMin;
     float _yMax; // camera variable initalization
+    private void Awake()
+    {
+        _ExplosionObject.SetActive(false);
+    }
 
-   
     void Start()
     {
         _playerHealth = GetComponent<Health>();
+        _playerShields = _player_Shield_Object.GetComponent<Shields>();
         // Cache the originial material for the ship 
         CacheOriginalMaterial();
         _Set_Up_Move_Boundaries();
         StartCoroutine(_TestCoroutine());
         _playerHealth.onDie += _playerHealth_onDie; // subscribe to death event from health script
     }
-
 
 
     private void OnDestroy()
@@ -148,10 +154,23 @@ public class Player : MonoBehaviour, IImpact
     private void ProcessHit(DamageDealer _damageDealer)
     {
         CinemachineShake.Instance.ShakeCamera(7, 0.1f);
-        _playerHealth.DealDamage(_damageDealer.GetDamage()); //subtract some health
-        PlayImpactEffect();
-        _damageDealer.Hit();
+        if (CanShieldsSustainDamage() == false)
+        {
+            _playerShields.DealShieldDamage(_damageDealer.GetDamage());
+            _Play_Shield_Impact_Effect();
+            _damageDealer.Hit();
+        }
+        else
+        {
+            _playerHealth.DealDamage(_damageDealer.GetDamage()); //subtract some health
+            PlayImpactEffect();
+            _damageDealer.Hit();
+        }
+
     }
+
+
+
     private void _playerHealth_onDie()
     {
         StartCoroutine(_finalExplosion());
@@ -169,6 +188,14 @@ public class Player : MonoBehaviour, IImpact
         
     }
 
+    private void _Play_Shield_Impact_Effect()
+    {
+        Debug.Log("Need to implement this later Access particle velocity over lifetime. ");
+        //playDamageSprite();
+        //StartCoroutine(_playFlash());
+        // _damageRenderer.sprite = null; // remove the sprite that was previously there.
+        //this.gameObject.GetComponent<SpriteRenderer>().material = _impactMat;
+    }
     public void PlayImpactEffect()
     {
         playDamageSprite();
@@ -188,6 +215,8 @@ public class Player : MonoBehaviour, IImpact
 
     private IEnumerator _finalExplosion()
     {
+        // TO DO:
+        // Implement this properly, currently doesn't work. 
         int _counter = 0;
        
         while (_counter < _shipDamage.Length)
@@ -199,7 +228,12 @@ public class Player : MonoBehaviour, IImpact
         }
         
             Debug.Log("changing ship image to counter value " + _counter);
+        _ExplosionObject.SetActive(true);
         yield return new WaitForSeconds(1f);
+    }
+    private bool CanShieldsSustainDamage()
+    {
+        return _playerShields.Get_Shield_Status();
     }
     private void playDamageSprite()
     {
@@ -239,4 +273,5 @@ public class Player : MonoBehaviour, IImpact
     }
 
     public Health _Get_Player_Health() => _playerHealth;
+    public Shields _GetPlayer_Shields() => _playerShields;
 }
