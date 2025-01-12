@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShieldMat
+  m_Name: EnemyShieldMat
   m_Shader: {fileID: -6465566751694194690, guid: f1c97f6fb3da8224ebe394adbb44220a,
     type: 3}
   m_Parent: {fileID: 0}
@@ -111,6 +111,6 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _ShieldOffset: {r: 1, g: 0, b: 0, a: 0}
-    - _editable: {r: 0.12156863, g: 0.8392157, b: 0.5803922, a: 0}
+    - _ShieldOffset: {r: 0, g: 0, b: 0, a: 0}
+    - _editable: {r: 1, g: 0.416472, b: 0.13679248, a: 0}
   m_BuildTextureStacks: []

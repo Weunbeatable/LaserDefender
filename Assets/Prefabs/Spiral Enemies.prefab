@@ -115,12 +115,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyHealth: {fileID: 3890650322781023902}
-  _health: 200
   scoreValue: 75
   _min_Time_Between_Shots: 0.2
-  _max_Time_Between_Shots: 3
+  _max_Time_Between_Shots: 2.2
   _deathTimer: 1
   _EnemyProjectileSpeed: -12
+  _enemyShields: {fileID: 0}
+  _enemy_Shield_Object: {fileID: 0}
   _impact_flash_duration: 0.2
   _EnemyLaser: {fileID: 5118262661088146345, guid: c0ae6e33b902a554092b588de1b0d159,
     type: 3}
@@ -218,5 +219,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f82223f220a97b4f9854f1b663cc8b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
-  health: 0
+  _maxHealth: 100
+  _health: 0

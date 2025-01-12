@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 3781520532233728276}
   m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -287,8 +287,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f82223f220a97b4f9854f1b663cc8b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1000
-  health: 0
+  _maxHealth: 1000
+  _health: 0
 --- !u!1 &6830557046591970108
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,6 +381,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6062868871330333700}
     m_Modifications:
+    - target: {fileID: 1809292542201764636, guid: 28ff560fb0b5abb4fb0f05742b77ef81,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4965091404467972054, guid: 28ff560fb0b5abb4fb0f05742b77ef81,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -435,6 +440,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: playerShields
+      objectReference: {fileID: 0}
+    - target: {fileID: 6984845001854998741, guid: 28ff560fb0b5abb4fb0f05742b77ef81,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7451647658054012984, guid: 28ff560fb0b5abb4fb0f05742b77ef81,
+        type: 3}
+      propertyPath: _maxShields
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 7451647658054012984, guid: 28ff560fb0b5abb4fb0f05742b77ef81,
+        type: 3}
+      propertyPath: _canRecharge
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7451647658054012984, guid: 28ff560fb0b5abb4fb0f05742b77ef81,
+        type: 3}
+      propertyPath: _rechargeCooldown
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

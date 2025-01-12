@@ -1,0 +1,137 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5699441964197069542
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5410702543226978232}
+  - component: {fileID: 5633442296699618874}
+  - component: {fileID: 1401624620625386115}
+  m_Layer: 0
+  m_Name: MeteorSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5410702543226978232
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5699441964197069542}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.13403273, y: 10.376508, z: -0.07990272}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &5633442296699618874
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5699441964197069542}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 25, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &1401624620625386115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5699441964197069542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98b5a72f32c709944abb0370a87fb59b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickup: 0
+  _utilityMeteors:
+  - {fileID: 21300000, guid: d03666df4aeb6014c88359f8f8a8eb02, type: 3}
+  - {fileID: 21300000, guid: 73fdf4f16fb4a28429210b5ecb659130, type: 3}
+  - {fileID: 21300000, guid: 97c0b8928b9a6db49987757a852261df, type: 3}
+  - {fileID: 21300000, guid: 3c4bf287687172b4e953266210bfc5e3, type: 3}
+  - {fileID: 21300000, guid: 48e2dcefb61fafc46a3740bc4558d893, type: 3}
+  - {fileID: 21300000, guid: 60726b417b9c995479fb62614cca57c2, type: 3}
+  - {fileID: 21300000, guid: 31fc6265d9c18294488de14447d83d01, type: 3}
+  - {fileID: 21300000, guid: c9a0a221b49f7cb4a8ea405786b9065c, type: 3}
+  - {fileID: 21300000, guid: 1d4a1d2c9ff9d83428e842e8de9a2f94, type: 3}
+  - {fileID: 21300000, guid: e9ce09f51af16fe4faf15cb9213030f0, type: 3}
+  _survivalMeteors:
+  - {fileID: 21300000, guid: 4d1e6ab28fc6c9849b325d882e48c1bc, type: 3}
+  - {fileID: 21300000, guid: 0fd7de4aa16c8ef418bfead54cbdcdd4, type: 3}
+  - {fileID: 21300000, guid: 4eae946c0a534d340b53304018cf71fb, type: 3}
+  - {fileID: 21300000, guid: db92f261d83e12b45a2d0e72561a38dc, type: 3}
+  - {fileID: 21300000, guid: 35d5feff790a1e849ab28ada86358442, type: 3}
+  - {fileID: 21300000, guid: 2763bee03b0a475468da39e5b05d72dd, type: 3}
+  - {fileID: 21300000, guid: 9bd32d33ab0c91f439004d280fb1e6d6, type: 3}
+  - {fileID: 21300000, guid: 659f6c8dde944804e9bf45dba7dfe351, type: 3}
+  - {fileID: 21300000, guid: d88cb29e259e4b241a8103bbf4fb661a, type: 3}
+  - {fileID: 21300000, guid: 32c0826a0a81b0b49931a2fa1746043d, type: 3}
+  _utilityPrefab: {fileID: 3660213193524836785, guid: 9a50ec56777b0bc439124eb2a3f5635e,
+    type: 3}
+  _survivalPrefab: {fileID: 4626817162178062610, guid: 6f37ae1de58e4de4387fed98df7def23,
+    type: 3}
+  _meteor_Spawner_Collider: {fileID: 5633442296699618874}
+  _spawnSize: 0
+  _meteorLevels: 0
+  _next_Meteor_Timer: 0
+  _Meteor_Damage:
+    _Meteor_Dictionary_Items:
+    - _arraySize: 1
+      _assignedHealth: 1000
+    - _arraySize: 2
+      _assignedHealth: 700
+    - _arraySize: 3
+      _assignedHealth: 500
+    - _arraySize: 4
+      _assignedHealth: 450
+    - _arraySize: 5
+      _assignedHealth: 300
+    - _arraySize: 6
+      _assignedHealth: 200

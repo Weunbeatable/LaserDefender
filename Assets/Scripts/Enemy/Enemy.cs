@@ -16,6 +16,8 @@ public class Enemy : MonoBehaviour, IImpact
     [SerializeField] float _max_Time_Between_Shots = 3f;
     [SerializeField] float _deathTimer = 1f;
     [SerializeField] float _EnemyProjectileSpeed = -12f;
+    [SerializeField] Shields _enemyShields;
+    [SerializeField] GameObject _enemy_Shield_Object;
     [SerializeField] float _impact_flash_duration = 0.3f;
 
     [Header("Aduio and Visual objects")]
@@ -39,6 +41,10 @@ public class Enemy : MonoBehaviour, IImpact
         if(TryGetComponent<SpriteRenderer>(out SpriteRenderer spriteRenderer))
         {
             _originalMat = spriteRenderer.material;
+        }
+        if(_enemy_Shield_Object != null)
+        {
+            _enemyShields = _enemy_Shield_Object.GetComponent<Shields>();
         }
         _shotCounter = UnityEngine.Random.Range(_min_Time_Between_Shots, _max_Time_Between_Shots);
         _enemyHealth.onDie += _enemyHealth_onDie;
@@ -74,14 +80,34 @@ public class Enemy : MonoBehaviour, IImpact
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        DamageDealer _damageDealer = other.gameObject.GetComponent<DamageDealer>(); // calling the damage dealer class when it damages the other object.
-        if (!_damageDealer) { return; }
-        ProcessHit(_damageDealer);
+        if(other.tag == "Player_Laser")
+        {
+            DamageDealer _damageDealer = other.gameObject.GetComponent<DamageDealer>(); // calling the damage dealer class when it damages the other object.
+            if (!_damageDealer) { return; }
+            ProcessHit(_damageDealer);
+        }
+
     }
  
     private void ProcessHit(DamageDealer _damageDealer)
     {
-        HandleDamgeProcess(_damageDealer);
+        if (_enemyShields != null) // some enemies won't have shields soooo yeah. 
+        {
+            if (CanShieldsSustainDamage() == false)
+            {
+                _enemyShields.DealShieldDamage(_damageDealer.GetDamage());
+                
+            }
+            else
+            {
+                HandleDamgeProcess(_damageDealer);
+            }
+        }
+        else
+        {
+            HandleDamgeProcess(_damageDealer);
+        }
+
     }
     private void _enemyHealth_onDie()
     {
@@ -122,6 +148,10 @@ public class Enemy : MonoBehaviour, IImpact
         this.gameObject.GetComponent<SpriteRenderer>().material = _impactMat;
     }
 
+    private bool CanShieldsSustainDamage()
+    {
+        return _enemyShields.Get_Shield_Status();
+    }
     private IEnumerator _playFlash()
     {
         while (true)
