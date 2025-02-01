@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour, IImpact
     [SerializeField] Shields _enemyShields;
     [SerializeField] GameObject _enemy_Shield_Object;
     [SerializeField] float _impact_flash_duration = 0.3f;
+    [SerializeField] GameObject deathParticles;
 
     [Header("Aduio and Visual objects")]
     [SerializeField] GameObject _EnemyLaser;
@@ -58,6 +59,7 @@ public class Enemy : MonoBehaviour, IImpact
     // Update is called once per frame
     void Update()
     {
+        
         CountDownAndShoot();
     }
     private void CountDownAndShoot()
@@ -105,12 +107,14 @@ public class Enemy : MonoBehaviour, IImpact
         }
         else
         {
+            
             HandleDamgeProcess(_damageDealer);
         }
 
     }
     private void _enemyHealth_onDie()
     {
+        
         Die();
     }
     private void HandleDamgeProcess(DamageDealer _damageDealer)
@@ -131,6 +135,7 @@ public class Enemy : MonoBehaviour, IImpact
         }
         CinemachineShake.Instance.ShakeCamera(6, 0.1f);
         //TODO add death effects
+        Instantiate(deathParticles, transform.position, Quaternion.identity);
         Destroy(gameObject, _deathTimer);
     }
 

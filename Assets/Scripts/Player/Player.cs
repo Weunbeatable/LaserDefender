@@ -27,6 +27,7 @@ public class Player : MonoBehaviour, IImpact
 
     [Header("Projectile")]
     [SerializeField] public GameObject laser;
+    [SerializeField] private GameObject spawnPoint;
     [SerializeField] float _ProjectileSpeed = 10f;
     [SerializeField] float _ProjectileFiringPeriod = .4f;
 
@@ -93,7 +94,7 @@ public class Player : MonoBehaviour, IImpact
     {
         while (true)
         {
-            GameObject Laser = Instantiate(laser, transform.position, Quaternion.identity);  // quaternion.identity means just use rotation you have don't change anything.
+            GameObject Laser = Instantiate(laser, spawnPoint.transform.position, Quaternion.identity);  // quaternion.identity means just use rotation you have don't change anything.
             Laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, _ProjectileSpeed); // apply some velocity to this projectile
             AudioSource.PlayClipAtPoint(playerLaser, Camera.main.transform.position, laserSound); // use camera.main for displaying sound for better 3d audio management.
             yield return new WaitForSeconds(_ProjectileFiringPeriod);

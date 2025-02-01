@@ -119,16 +119,20 @@ MonoBehaviour:
   scoreValue: 150
   _min_Time_Between_Shots: 0.2
   _max_Time_Between_Shots: 2.5
-  _deathTimer: 1
+  _deathTimer: 1.4
   _EnemyProjectileSpeed: -3
   _enemyShields: {fileID: 5461314008617948579}
   _enemy_Shield_Object: {fileID: 5497991014836411726}
   _impact_flash_duration: 0.2
+  deathParticles: {fileID: 1426960303954112721, guid: 8dc6dda562ad65f4cb4874dbbf9a209b,
+    type: 3}
   _EnemyLaser: {fileID: 5118262661088146345, guid: c363f6534b2dae244a48701a49d2740c,
     type: 3}
   _ExplosionVFX: {fileID: 5801416215503892025, guid: 7aba8de520ee244418a0bc4e887704c7,
     type: 3}
   _impactMat: {fileID: 2100000, guid: 7f6ca4bfee7af7f41a0d707fea6a7323, type: 2}
+  _near_Explosion_VFX: {fileID: 8764043878647920493, guid: c4ed38c72957f2241ad144a1614956d9,
+    type: 3}
   enemy_Laser_SFX: {fileID: 8300000, guid: ff8b6042f92cddd499dca32d2ebeee31, type: 3}
   enemy_Death_SFX: {fileID: 8300000, guid: c4f45abde3f988846a4389803e631e89, type: 3}
   enemy_Laser_SFX_Volume: 0.25
